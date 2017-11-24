@@ -45,20 +45,20 @@ ln -s /etc/init.d/dbora /etc/rc.d/rc3.d/S99dbora
 ln -s /etc/init.d/dbora /etc/rc.d/rc5.d/S99dbora
 
 #WebLogic
-unzip -o V886423-01.zip
-java -jar fmw_12.2.1.3.0_wls.jar -silent -invPtrLoc `pwd`/inv.loc -responseFile `pwd`/wls.rsp
+runuser -l oracle -c 'unzip -o V886423-01.zip'
+runuser -l oracle -c 'java -jar fmw_12.2.1.3.0_wls.jar -silent -invPtrLoc `pwd`/inv.loc -responseFile `pwd`/wls.rsp'
 
 #SOA Infrastructure
-unzip -o V886426-01.zip
-java -jar fmw_12.2.1.3.0_infrastructure.jar -silent -invPtrLoc `pwd`/inv.loc -responseFile `pwd`/wls_infra.rsp
+runuser -l oracle -c 'unzip -o V886426-01.zip'
+runuser -l oracle -c 'java -jar fmw_12.2.1.3.0_infrastructure.jar -silent -invPtrLoc `pwd`/inv.loc -responseFile `pwd`/wls_infra.rsp'
 
 #SOA Suite
-unzip -o V886440-01.zip
-java -jar fmw_12.2.1.3.0_soa.jar -silent -invPtrLoc `pwd`/inv.loc -responseFile `pwd`/soa.rsp
+runuser -l oracle -c 'unzip -o V886440-01.zip'
+runuser -l oracle -c 'java -jar fmw_12.2.1.3.0_soa.jar -silent -invPtrLoc `pwd`/inv.loc -responseFile `pwd`/soa.rsp'
 
 #OSB
-unzip -o V886445-01.zip
-java -jar fmw_12.2.1.3.0_osb.jar -silent -invPtrLoc `pwd`/inv.loc -responseFile `pwd`/osb.rsp
+runuser -l oracle -c 'unzip -o V886445-01.zip'
+runuser -l oracle -c 'java -jar fmw_12.2.1.3.0_osb.jar -silent -invPtrLoc `pwd`/inv.loc -responseFile `pwd`/osb.rsp'
 
 #RCU
-/home/oracle/Oracle/Middleware1221/oracle_common/bin/rcu -silent -responseFile `pwd`/rcuResponseFile.properties
+runuser -l oracle -c '/home/oracle/Oracle/Middleware1221/oracle_common/bin/rcu -silent -responseFile `pwd`/rcuResponseFile.properties'
