@@ -20,18 +20,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   soadb.vm.box_version = "0.0.1"
 	
   #for local
+  #first do something like: vagrant box add ol74 file:///d:/vagrant/packer/virtualbox/ol74.box
+  #for new versions first vagrant box remove ol74
   #soadb.vm.box = "ol74"
+  
   soadb.vm.hostname = "soadb"
     
   #update this folder. it should contain oracle-xe-11.2.0-1.0.x86_64.rpm.zip and xe.rsp
-  soadb.vm.synced_folder "d:/vagrant/software", "/software", :mount_options => ["dmode=777","fmode=777"]
+  soadb.vm.synced_folder "./software", "/software", :mount_options => ["dmode=777","fmode=777"]
 
-  soadb.vm.network :private_network, ip: "192.168.0.1"
+  soadb.vm.network :private_network, ip: "192.168.3.2"
 
   soadb.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm"     , :id, "--memory", "4096"]
+      vb.customize ["modifyvm"     , :id, "--memory", "8192"]
       vb.customize ["modifyvm"     , :id, "--name"  , "soadb"]
-      vb.customize ["modifyvm"     , :id, "--cpus"  , 4]
+      vb.customize ["modifyvm"     , :id, "--cpus"  , 2]
+	  vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
+	  vb.customize ["modifyvm"     , :id, "--vram","16"]
   end
 	
   #this starts provisioning the machine
