@@ -16,13 +16,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "soadb" , primary: true do |soadb|
   #for remote (uses vagrantcloud)
-  soadb.vm.box = "maartensmeets/oel74"
-  soadb.vm.box_version = "0.0.1"
+  #soadb.vm.box = "maartensmeets/oel74"
+  #soadb.vm.box_version = "0.0.1"
 	
   #for local
   #first do something like: vagrant box add ol74 file:///d:/vagrant/packer/virtualbox/ol74.box
   #for new versions first vagrant box remove ol74
-  #soadb.vm.box = "ol74"
+  soadb.vm.box = "ol74"
   
   soadb.vm.hostname = "soadb"
     

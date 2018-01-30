@@ -1,6 +1,6 @@
 {
   "variables": {
-	"iso_url": "http://mirror.aarnet.edu.au/pub/oraclelinux/OL7/u4/x86_64/OracleLinux-R7-U4-Server-x86_64-dvd.iso",
+	"iso_url": "http://ftp5.gwdg.de/pub/linux/oracle/OL7/u4/x86_64/OracleLinux-R7-U4-Server-x86_64-dvd.iso",
 	"iso_checksum": "298724f8eaa0dbf961c608c4965be70e",
 	"iso_checksum_type": "md5",
     "output": "virtualbox/ol74.box",
