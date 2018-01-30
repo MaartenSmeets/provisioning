@@ -1,0 +1,85 @@
+{
+  "builders": [{
+    "type": "virtualbox-iso",
+    "guest_os_type": "Ubuntu_64",
+    "guest_additions_url": "",
+    "guest_additions_sha256": "",
+    "guest_additions_path": "",
+	"guest_additions_mode": "upload",	
+    "iso_url": "{{user `mirror`}}/17.10.1/ubuntu-17.10.1-server-amd64.iso",
+    "iso_checksum": "{{user `iso_checksum`}}",
+    "iso_checksum_type": "{{user `iso_checksum_type`}}",
+    "output_directory": "output-ubuntu-17.10.1-amd64-{{build_type}}",
+    "vm_name": "packer-ubuntu-17.10.1-amd64",
+    "disk_size": "{{user `disk_size`}}",
+    "headless": "{{user `headless`}}",
+    "http_directory": "ubuntu_http",
+    "boot_wait": "5s",
+    "boot_command": [
+      "<esc><wait>",
+      "<esc><wait>",
+      "<enter><wait>",
+      "/install/vmlinuz ",
+      "initrd=/install/initrd.gz ",
+	  "net.ifnames=0 ",
+      "auto-install/enable=true ",
+      "debconf/priority=critical ",
+      "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg",
+      "<enter>"
+    ],
+    "ssh_timeout": "{{user `ssh_timeout`}}",
+    "ssh_username": "root",
+    "ssh_password": "Welcome01",
+	"ssh_wait_timeout": "30m",
+    "shutdown_timeout": "40m",	  
+    "shutdown_command": "sudo systemctl poweroff",
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--memory", "{{user `memory`}}"],
+      ["modifyvm", "{{.Name}}", "--cpus", "{{user `cpus`}}"]
+    ]
+  }],
+  "provisioners"             : [
+    {
+    "type": "shell",
+    "execute_command": "sh '{{ .Path }}'",
+    "pause_before": "1s",
+    "inline": [
+      "mkdir -p /media/dvd",
+      "mount -o loop,ro VBoxGuestAdditions*.iso /media/dvd",
+      "sh /media/dvd/VBoxLinuxAdditions.run --nox11",
+      "umount /media/dvd",
+      "rm VBoxGuestAdditions*.iso",
+	  "useradd course",
+	  "usermod -a -G vboxsf course",
+      "cp /etc/sudoers /etc/sudoers.orig",
+      "sed -i -e 's/Defaults\\s*requiretty$/#Defaults\trequiretty/' /etc/sudoers",
+      "sed -i -e '/# %wheel\tALL=(ALL)\tNOPASSWD: ALL/a %vagrant\tALL=(ALL)\tNOPASSWD: ALL' /etc/sudoers",
+	  "sed -i -e '/# %wheel\tALL=(ALL)\tNOPASSWD: ALL/a %course\tALL=(ALL)\tNOPASSWD: ALL' /etc/sudoers",
+	  "mkdir ~vagrant/.ssh",
+      "chmod 700 ~vagrant/.ssh",
+      "echo 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key' > ~vagrant/.ssh/authorized_keys",
+      "chmod 600 ~vagrant/.ssh/authorized_keys",
+      "chown -R vagrant: ~vagrant/.ssh",
+      "cp /etc/ssh/sshd_config /etc/ssh/sshd_config.ori",
+      "history -c",
+      "true"
+       ]
+  }
+],
+  "post-processors": [{
+    "type": "vagrant",
+    "compression_level": "{{user `compression_level`}}",
+    "output": "ubuntu-17.10.1-amd64-{{.Provider}}.box"
+  }],
+  "variables": {
+    "compression_level": "6",
+    "cpus": "1",
+    "disk_size": "40000",
+    "headless": "false",
+    "iso_checksum": "7fe25fa47bebc40f4e5007aa182eb627",
+    "iso_checksum_type": "md5",
+    "memory": "512",
+    "mirror": "http://releases.ubuntu.com",
+    "ssh_timeout": "60m"
+  }
+}

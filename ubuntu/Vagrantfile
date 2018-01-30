@@ -1,0 +1,46 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define "course" , primary: true do |course|
+  #for remote (uses vagrantcloud)
+  #soadb.vm.box = "maartensmeets/oel74"
+  #soadb.vm.box_version = "0.0.1"
+	
+  #for local
+  #first do something like: vagrant box add ubuntu file:///C:/vagrant/provisioning/ubuntu/packer/ubuntu-17.10.1-amd64-virtualbox.box
+  #for new versions first vagrant box remove ubuntu
+  course.vm.box = "ubuntu"
+  
+  course.vm.hostname = "course"
+    
+  course.vm.synced_folder "./software", "/software", :mount_options => ["dmode=777","fmode=777"]
+
+  course.vm.network :private_network, ip: "192.168.3.2"
+
+  course.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm"     , :id, "--memory", "8192"]
+      vb.customize ["modifyvm"     , :id, "--name"  , "course"]
+      vb.customize ["modifyvm"     , :id, "--cpus"  , 2]
+	  vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
+	  vb.customize ["modifyvm"     , :id, "--vram","16"]
+  end
+	
+  #this starts provisioning the machine
+  course.vm.provision :shell, path: "provision.sh"
+
+  end
+
+end
