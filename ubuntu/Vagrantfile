@@ -22,13 +22,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #for local
   #first do something like: vagrant box add ubuntu file:///C:/vagrant/provisioning/ubuntu/packer/ubuntu-17.10.1-amd64-virtualbox.box
   #for new versions first vagrant box remove ubuntu
-  course.vm.box = "ubuntu"
+  course.vm.box = "fso/artful64"
   
   course.vm.hostname = "course"
     
   course.vm.synced_folder "./software", "/software", :mount_options => ["dmode=777","fmode=777"]
 
-  course.vm.network :private_network, ip: "192.168.3.2"
+  course.vm.network :private_network, ip: "192.168.99.100"
 
   course.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm"     , :id, "--memory", "8192"]
