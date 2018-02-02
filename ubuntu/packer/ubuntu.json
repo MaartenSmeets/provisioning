@@ -28,11 +28,11 @@
       "<enter>"
     ],
     "ssh_timeout": "{{user `ssh_timeout`}}",
-    "ssh_username": "root",
-    "ssh_password": "Welcome01",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
 	"ssh_wait_timeout": "30m",
     "shutdown_timeout": "40m",	  
-    "shutdown_command": "sudo systemctl poweroff",
+    "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--memory", "{{user `memory`}}"],
       ["modifyvm", "{{.Name}}", "--cpus", "{{user `cpus`}}"]
@@ -41,12 +41,12 @@
   "provisioners"             : [
     {
     "type": "shell",
-    "execute_command": "sh '{{ .Path }}'",
+    "execute_command": "echo 'vagrant' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
     "pause_before": "1s",
     "inline": [
       "mkdir -p /media/dvd",
       "mount -o loop,ro VBoxGuestAdditions*.iso /media/dvd",
-      "sh /media/dvd/VBoxLinuxAdditions.run --nox11",
+      "sh /media/dvd/VBoxLinuxAdditions.run --nox11 || echo 'VBoxLinuxAdditions.run exited and is suppressed. For more read https://www.virtualbox.org/ticket/12479'",
       "umount /media/dvd",
       "rm VBoxGuestAdditions*.iso",
 	  "useradd course",
@@ -61,7 +61,6 @@
       "chmod 600 ~vagrant/.ssh/authorized_keys",
       "chown -R vagrant: ~vagrant/.ssh",
       "cp /etc/ssh/sshd_config /etc/ssh/sshd_config.ori",
-      "history -c",
       "true"
        ]
   }
