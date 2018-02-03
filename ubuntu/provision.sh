@@ -37,10 +37,10 @@ sudo -u course docker run -p 127.0.0.1:5432:5432 --name postgres-docker -e POSTG
 #
 
 sudo -u course wget http://download.springsource.com/release/STS/3.9.2.RELEASE/dist/e4.7/spring-tool-suite-3.9.2.RELEASE-e4.7.2-linux-gtk-x86_64.tar.gz -O /home/course/sts.tar.gz
-sudo -u course -- sh -c "cd/home/course; tar xvfz sts.tar.gz"
+sudo -u course -- sh -c "cd /home/course; tar xvfz sts.tar.gz"
 
 sudo -u course wget https://dl.pstmn.io/download/latest/linux64 -O /home/course/postman.tar.gz
-sudo -u course -- sh -c "cd/home/course; tar xvfz postman.tar.gz"
+sudo -u course -- sh -c "cd /home/course; tar xvfz postman.tar.gz"
 
 sudo -u course wget http://www.kafkatool.com/download2/kafkatool.sh -O /home/course/kafkatool.sh
 
