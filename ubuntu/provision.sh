@@ -23,7 +23,7 @@ echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-se
 apt-get -y install oracle-java8-installer
 
 #Docker stuff
-sudo -u course git clone https://github.com/wurstmeister/kafka-docker.git /home/course/kafka-docker
+#sudo -u course git clone https://github.com/wurstmeister/kafka-docker.git /home/course/kafka-docker
 
 #Start containers
 #sudo -u course -- sh -c "cd /home/course/kafka-docker; docker-compose -f docker-compose-single-broker.yml up -d"
@@ -34,6 +34,7 @@ sudo -u course git clone https://github.com/wurstmeister/kafka-docker.git /home/
 #docker rm postpres-docker
 #docker rm kafkadocker_zookeeper_1
 #docker rm kafkadocker_kafka_1
+#docker rm redis-docker
 
 sudo -u course wget http://download.springsource.com/release/STS/3.9.2.RELEASE/dist/e4.7/spring-tool-suite-3.9.2.RELEASE-e4.7.2-linux-gtk-x86_64.tar.gz -O /home/course/sts.tar.gz
 sudo -u course -- sh -c "cd /home/course; tar xvfz sts.tar.gz"
@@ -41,10 +42,10 @@ sudo -u course -- sh -c "cd /home/course; tar xvfz sts.tar.gz"
 sudo -u course wget https://dl.pstmn.io/download/latest/linux64 -O /home/course/postman.tar.gz
 sudo -u course -- sh -c "cd /home/course; tar xvfz postman.tar.gz"
 
-sudo -u course wget http://www.kafkatool.com/download2/kafkatool.sh -O /home/course/kafkatool.sh
+#sudo -u course wget http://www.kafkatool.com/download2/kafkatool.sh -O /home/course/kafkatool.sh
 
 #sudo -u course git clone https://github.com/MaartenSmeets/springboot.git /home/course/springboot
-#/home/course/sts-bundle/sts-3.9.2.RELEASE/STS -data /home/course/springboot
+#For starting STS (after git clone above): /home/course/sts-bundle/sts-3.9.2.RELEASE/STS -data /home/course/springboot
 
 shutdown -P now
 
