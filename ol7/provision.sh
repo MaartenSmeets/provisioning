@@ -17,7 +17,7 @@ yum install docker-engine btrfs-progs btrfs-progs-devel -y
 systemctl start docker
 systemctl enable docker
 usermod -a -G docker oracle
-docker login -u maarten.smeets@amis.nl -p WdKw2doNuff8N container-registry.oracle.com
+docker login -u maarten.smeets@amis.nl -p xxxxx container-registry.oracle.com
 
 #Database
 docker run -d --env-file /software/db_env.dat -p 1521:1521 -p 5500:5500 -it --name dockerDB container-registry.oracle.com/database/enterprise:12.2.0.1-slim
