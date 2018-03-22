@@ -1,3 +1,7 @@
+#Fix disk
+#sudo pvresize /dev/sda1
+#sudo lvresize -r -l +100%FREE /dev/mapper/vagrant--vg-root
+
 #Desktop
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
  
@@ -5,8 +9,11 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(
 add-apt-repository ppa:webupd8team/java
 
 apt-get update
-apt-get -y install aptitude apt-transport-https ca-certificates curl software-properties-common docker-ce docker-compose terminator firefox libxss1 libgconf2-4
+apt-get -y install aptitude apt-transport-https ca-certificates curl software-properties-common docker-ce docker-compose libxss1 libgconf2-4
 aptitude -y install --without-recommends ubuntu-desktop 
+#Fix root not allowed to start X-window
+xhost local:root
+apt-get -y install terminator firefox gparted
 
 #course user
 useradd -d /home/course -m course
@@ -23,7 +30,7 @@ echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-se
 apt-get -y install oracle-java8-installer
 
 #Docker stuff
-#sudo -u course git clone https://github.com/wurstmeister/kafka-docker.git /home/course/kafka-docker
+sudo -u course git clone https://github.com/wurstmeister/kafka-docker.git /home/course/kafka-docker
 
 #Start containers
 #sudo -u course -- sh -c "cd /home/course/kafka-docker; docker-compose -f docker-compose-single-broker.yml up -d"
@@ -41,11 +48,11 @@ sudo -u course -- sh -c "cd /home/course; tar xvfz sts.tar.gz"
 
 sudo -u course wget https://dl.pstmn.io/download/latest/linux64 -O /home/course/postman.tar.gz
 sudo -u course -- sh -c "cd /home/course; tar xvfz postman.tar.gz"
+sudo -u course rm -f /home/course/postman.tar.gz
 
-#sudo -u course wget http://www.kafkatool.com/download2/kafkatool.sh -O /home/course/kafkatool.sh
+sudo -u course wget http://www.kafkatool.com/download2/kafkatool.sh -O /home/course/kafkatool.sh
 
+#Fix screen flickering issue
+sudo perl -e '$^I=".backup";while(<>){s/#(WaylandEnable=false)/$1/;print;}' /etc/gdm3/custom.conf
 #sudo -u course git clone https://github.com/MaartenSmeets/springboot.git /home/course/springboot
 #For starting STS (after git clone above): /home/course/sts-bundle/sts-3.9.2.RELEASE/STS -data /home/course/springboot
-
-shutdown -P now
-

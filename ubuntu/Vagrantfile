@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #This Ubuntu Server base box already has 5.2.6 guest additions. Make sure you use the same VirtualBox version. 
   #VirtualBox 5.2.4 for example does not work wth shared clipboard with this version of the guest additions
   #enabling Vagrant to do network setup in Ubuntu 17.10 Server is a challenge. This image fixes that.
-  #Make sure you use Vagrant 2.0.2
+  #Make sure you use Vagrant 2.0.3
   course.vm.box = "fso/artful64"
   
   course.vm.hostname = "course"
@@ -28,8 +28,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #course.vm.synced_folder "./software", "/software", :mount_options => ["dmode=777","fmode=777"]
 
   #The Kafka Docker Swarm file uses this IP by default. In order to se the script as is, set this IP
+  #for this to work make sure you use 
   course.vm.network :private_network, ip: "192.168.99.100"
-
+  
+  #vagrant plugin install vagrant-disksize
+  #course.disksize.size = '30GB'
+  
   course.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm"     , :id, "--memory", "8192"]
       vb.customize ["modifyvm"     , :id, "--name"  , "course"]
@@ -37,13 +41,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	  vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
 	  vb.customize ["modifyvm"     , :id, "--vram","16"]
 	  #Below is handy if you want to install your own version of the Virtualbox guest additions
-	  #vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", "0", "--device", "1", "--type", "dvddrive", "--medium", "emptydrive"]  
+	  vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", "0", "--device", "1", "--type", "dvddrive", "--medium", "emptydrive"]  
 
   end
 	
   #this starts provisioning the machine
   course.vm.provision :shell, path: "provision.sh"
-
   end
 
 end
