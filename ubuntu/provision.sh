@@ -29,8 +29,17 @@ echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-
 echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
 apt-get -y install oracle-java8-installer
 
+#Node.js
+#curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+#apt-get install -y nodejs
+
+#Sublime Text editor
+#sudo add-apt-repository ppa:webupd8team/sublime-text-3
+#sudo apt-get update
+#sudo apt-get install sublime-text-installer
+
 #Docker stuff
-sudo -u course git clone https://github.com/wurstmeister/kafka-docker.git /home/course/kafka-docker
+#sudo -u course git clone https://github.com/wurstmeister/kafka-docker.git /home/course/kafka-docker
 
 #Start containers
 #sudo -u course -- sh -c "cd /home/course/kafka-docker; docker-compose -f docker-compose-single-broker.yml up -d"
