@@ -14,17 +14,17 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.define "soadb" , primary: true do |soadb|
+  config.vm.define "soamaster" , primary: true do |soamaster|
   #for remote (uses vagrantcloud)
-  #soadb.vm.box = "maartensmeets/oel74"
+  #soadb.vm.box = "maartensmeets/oel75"
   #soadb.vm.box_version = "0.0.1"
 	
   #for local
-  #first do something like: vagrant box add ol74 file:///d:/vagrant/packer/virtualbox/ol74.box
-  #for new versions first vagrant box remove ol74
-  soadb.vm.box = "ol74"
+  #first do something like: vagrant box add ol75 file:///d:/vagrant/packer/virtualbox/ol75.box
+  #for new versions first vagrant box remove ol75
+  soadb.vm.box = "ol75"
   
-  soadb.vm.hostname = "soadb"
+  soadb.vm.hostname = "soamaster"
     
   #update this folder. it should contain oracle-xe-11.2.0-1.0.x86_64.rpm.zip and xe.rsp
   soadb.vm.synced_folder "./software", "/software", :mount_options => ["dmode=777","fmode=777"]
@@ -33,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   soadb.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm"     , :id, "--memory", "8192"]
-      vb.customize ["modifyvm"     , :id, "--name"  , "soadb"]
+      vb.customize ["modifyvm"     , :id, "--name"  , "soamaster"]
       vb.customize ["modifyvm"     , :id, "--cpus"  , 2]
 	  vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
 	  vb.customize ["modifyvm"     , :id, "--vram","16"]
