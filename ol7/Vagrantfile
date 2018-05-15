@@ -16,13 +16,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "soamaster" , primary: true do |soamaster|
   #for remote (uses vagrantcloud)
-  #soamaster.vm.box = "maartensmeets/oel75"
-  #soamaster.vm.box_version = "0.0.1"
+  soamaster.vm.box = "maartensmeets/oel75"
+  soamaster.vm.box_version = "0.0.1"
 	
   #for local
   #first do something like: vagrant box add ol75 file:///d:/vagrant/packer/virtualbox/ol75.box
   #for new versions first vagrant box remove ol75
-  soamaster.vm.box = "ol75"
+  #soamaster.vm.box = "ol75"
   
   soamaster.vm.hostname = "soamaster"
     
