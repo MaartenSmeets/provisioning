@@ -27,6 +27,7 @@ alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0/bin/jar 20000
 alternatives --install /usr/bin/javac javac /usr/java/jdk1.8.0/bin/javac 20000
 alternatives --install /usr/bin/javaws javaws /usr/java/jdk1.8.0/jre/bin/javaws 20000
 
+#Update this line and uncomment
 #docker login -u maarten.smeets@amis.nl -p xxxxx container-registry.oracle.com
 
 mkdir -p /scratch/DockerVolume/SOAVolume/
@@ -38,11 +39,16 @@ docker network create -d bridge SOANet
 
 docker pull container-registry.oracle.com/database/enterprise:12.2.0.1
 docker tag container-registry.oracle.com/database/enterprise:12.2.0.1 oracle/database:12.2.0.1-ee
-docker run --name soadb --network=SOANet -p 1521:1521 -p 5500:5500 -v /scratch/DockerVolume/SOAVolume/DB:/opt/oracle/oradata --env-file /software/db.env.list  oracle/database:12.2.0.1-ee
+
+#Execute below line to start the database
+#docker run --name soadb --network=SOANet -p 1521:1521 -p 5500:5500 -v /scratch/DockerVolume/SOAVolume/DB:/opt/oracle/oradata --env-file /software/db.env.list  oracle/database:12.2.0.1-ee
 
 docker pull container-registry.oracle.com/middleware/soasuite:12.2.1.3
 docker tag container-registry.oracle.com/middleware/soasuite:12.2.1.3 oracle/soa:12.2.1.3
 
+
+#The 2-container variant has issues -> no NodeManager running and AdminServer cannot manage Managed Server. The One container variant works
+#
 #Two containers
 #docker run -i -t  --name soaas --network=SOANet -p 7001:7001 -v /scratch/DockerVolume/SOAVolume/SOA:/u01/oracle/user_projects --env-file /software/adminserver.env.list oracle/soa:12.2.1.3
 #docker run -i -t  --name soams --network=SOANet -p 8001:8001 --volumes-from soaas --env-file /software/soaserver.env.list oracle/soa:12.2.1.3 "/u01/oracle/dockertools/startMS.sh"
@@ -51,24 +57,3 @@ docker tag container-registry.oracle.com/middleware/soasuite:12.2.1.3 oracle/soa
 #docker run -i -t  --name soaas --network=SOANet -p 7001:7001 -p 8001:8001 -v /scratch/DockerVolume/SOAVolume/SOA:/u01/oracle/user_projects --env-file /software/adminserver.env.list --env-file /software/soaserver.env.list oracle/soa:12.2.1.3
 #docker exec -it soaas "/u01/oracle/dockertools/startMS.sh"
 #docker exec -d soaas "/u01/oracle/user_projects/domains/InfraDomain/bin/startNodeManager.sh"
-
-#Below is 'old fashioned'
-
-#WebLogic
-#runuser -l oracle -c 'unzip -o /software/V886423-01.zip -d /software'
-#runuser -l oracle -c 'java -jar /software/fmw_12.2.1.3.0_wls.jar -silent -invPtrLoc /software/inv.loc -responseFile /software/wls.rsp'
-
-#SOA Infrastructure
-#runuser -l oracle -c 'unzip -o /software/V886426-01.zip -d /software'
-#runuser -l oracle -c 'java -jar /software/fmw_12.2.1.3.0_infrastructure.jar -silent -invPtrLoc /software/inv.loc -responseFile /software/wls_infra.rsp'
-
-#SOA Suite
-#runuser -l oracle -c 'unzip -o /software/V886440-01.zip -d /software'
-#runuser -l oracle -c 'java -jar /software/fmw_12.2.1.3.0_soa.jar -silent -invPtrLoc /software/inv.loc -responseFile /software/soa.rsp'
-
-#OSB
-#runuser -l oracle -c 'unzip -o /software/V886445-01.zip -d /software'
-#runuser -l oracle -c 'java -jar /software/fmw_12.2.1.3.0_osb.jar -silent -invPtrLoc /software/inv.loc -responseFile /software/osb.rsp'
-
-#RCU
-#runuser -l oracle -c '/home/oracle/Oracle/Middleware1221/oracle_common/bin/rcu -silent -responseFile /software/rcuResponseFile.properties'
