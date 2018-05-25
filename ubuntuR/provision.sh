@@ -38,11 +38,10 @@ usermod -a -G docker developer
 usermod -a -G sudo developer
 
 #install packages
-echo 'install.packages("tree")' > /home/developer/install.R
-echo 'install.packages("randomForest")' >> /home/developer/install.R
-echo 'install.packages("stat")' >> /home/developer/install.R
+echo 'install.packages("tree", lib.loc="~/R/x86_64-pc-linux-gnu-library-3.4")' > /home/developer/install.R
+echo 'install.packages("randomForest", lib.loc="~/R/x86_64-pc-linux-gnu-library-3.4")' >> /home/developer/install.R
 chown developer.developer /home/developer/install.R
-Rscript /home/developer/install.R
+sudo -u developer -- sh -c "Rscript /home/developer/install.R"
 
 #Hide vagrant
 echo '[User]' > /var/lib/AccountsService/users/vagrant
