@@ -7,6 +7,8 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB
 add-apt-repository 'deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu artful/'
 
 apt-get update
+apt-get upgrade       # Strictly upgrades the current packages
+apt-get dist-upgrade  # Installs updates (new ones)
 apt-get -y install aptitude apt-transport-https ca-certificates curl software-properties-common libxss1 libgconf2-4 
 aptitude -y install --without-recommends ubuntu-desktop 
 #Fix root not allowed to start X-window
