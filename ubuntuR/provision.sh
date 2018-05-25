@@ -1,11 +1,14 @@
 #Docker
 curl -fsSL test.docker.com | sh
+
+#Java
 add-apt-repository ppa:linuxuprising/java
 
 #R
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
 add-apt-repository 'deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu artful/'
 
+#Install some packages, GUI
 apt-get update
 apt-get upgrade       # Strictly upgrades the current packages
 apt-get dist-upgrade  # Installs updates (new ones)
@@ -19,7 +22,6 @@ apt-get -y install terminator firefox gparted
 echo oracle-java10-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
 apt-get -y install oracle-java10-installer
 apt -y install oracle-java10-set-default
-
 
 #Fix screen flickering issue
 sudo perl -e '$^I=".backup";while(<>){s/#(WaylandEnable=false)/$1/;print;}' /etc/gdm3/custom.conf
