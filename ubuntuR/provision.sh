@@ -1,23 +1,23 @@
 #Docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-add-apt-repository ppa:webupd8team/java
+curl -fsSL test.docker.com | sh
+add-apt-repository ppa:linuxuprising/java
 
 #R
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
 add-apt-repository 'deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu artful/'
 
 apt-get update
-apt-get -y install aptitude apt-transport-https ca-certificates curl software-properties-common docker-ce docker-compose libxss1 libgconf2-4 
+apt-get -y install aptitude apt-transport-https ca-certificates curl software-properties-common libxss1 libgconf2-4 
 aptitude -y install --without-recommends ubuntu-desktop 
 #Fix root not allowed to start X-window
 xhost local:root
 apt-get -y install terminator firefox gparted
 
 #JDK
-echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
-echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
-apt-get -y install oracle-java8-installer
+echo oracle-java10-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+apt-get -y install oracle-java10-installer
+apt -y install oracle-java10-set-default
+
 
 #Fix screen flickering issue
 sudo perl -e '$^I=".backup";while(<>){s/#(WaylandEnable=false)/$1/;print;}' /etc/gdm3/custom.conf
@@ -38,8 +38,9 @@ usermod -a -G docker developer
 usermod -a -G sudo developer
 
 #install packages
-echo 'install.packages("tree", lib.loc="~/R/x86_64-pc-linux-gnu-library-3.4")' > /home/developer/install.R
-echo 'install.packages("randomForest", lib.loc="~/R/x86_64-pc-linux-gnu-library-3.4")' >> /home/developer/install.R
+sudo -u developer -- sh -c "mkdir -p /home/developer/R/x86_64-pc-linux-gnu-library-3.4"
+echo 'install.packages("tree", lib="/home/developer/R/x86_64-pc-linux-gnu-library-3.4")' > /home/developer/install.R
+echo 'install.packages("randomForest", lib="/home/developer/R/x86_64-pc-linux-gnu-library-3.4")' >> /home/developer/install.R
 chown developer.developer /home/developer/install.R
 sudo -u developer -- sh -c "Rscript /home/developer/install.R"
 
