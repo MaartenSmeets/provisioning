@@ -1,0 +1,58 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define "course" , primary: true do |course|
+  
+  #This Ubuntu Server base box already has 5.2.6 guest additions. Make sure you use the same VirtualBox version. 
+  #VirtualBox 5.2.4 for example does not work wth shared clipboard with this version of the guest additions
+  #enabling Vagrant to do network setup in Ubuntu 17.10 Server is a challenge. This image fixes that.
+  #Make sure you use Vagrant 2.0.3
+  course.vm.box = "ubuntu/artful64"
+  
+  course.vm.hostname = "course"
+  
+  #make sure vagrant plugin install vagrant-disksize
+  course.disksize.size = '50GB' 
+  
+  #make sure vagrant plugin install vagrant-vbguest
+  course.vbguest.auto_update = true
+  
+  #Not using shared folder this atm -> it downloads what it needs
+  #course.vm.synced_folder "./software", "/software", :mount_options => ["dmode=777","fmode=777"]
+
+  #The Kafka Docker Swarm file uses this IP by default. In order to se the script as is, set this IP
+  #for this to work make sure you use 
+  course.vm.network :private_network, ip: "192.168.99.100"
+  
+  #vagrant plugin install vagrant-disksize
+  #course.disksize.size = '30GB'
+  
+  course.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm"     , :id, "--memory", "8192"]
+      vb.customize ["modifyvm"     , :id, "--name"  , "course"]
+      vb.customize ["modifyvm"     , :id, "--cpus"  , 2]
+	  vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
+	  vb.customize ["modifyvm"     , :id, "--vram","16"]
+	  #Below is handy if you want to install your own version of the Virtualbox guest additions
+	  #vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", "0", "--device", "1", "--type", "dvddrive", "--medium", "emptydrive"]  
+
+  end
+	
+  #this starts provisioning the machine
+  course.vm.provision :shell, path: "provision.sh"
+  end
+
+end
