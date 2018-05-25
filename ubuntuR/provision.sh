@@ -40,6 +40,7 @@ echo -e "Welcome01\nWelcome01" | passwd developer
 usermod -a -G vboxsf developer
 usermod -a -G docker developer
 usermod -a -G sudo developer
+usermod --shell /bin/bash developer
 
 #install packages
 sudo -u developer -- sh -c "mkdir -p /home/developer/R/x86_64-pc-linux-gnu-library-3.4"
@@ -52,4 +53,5 @@ sudo -u developer -- sh -c "Rscript /home/developer/install.R"
 echo '[User]' > /var/lib/AccountsService/users/vagrant
 echo 'SystemAccount=true' >> /var/lib/AccountsService/users/vagrant
 
+apt-get clean
 shutdown now -h
