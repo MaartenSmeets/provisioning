@@ -53,7 +53,23 @@ docker tag container-registry.oracle.com/middleware/soasuite:12.2.1.3 oracle/soa
 #docker run -i -t  --name soaas --network=SOANet -p 7001:7001 -v /scratch/DockerVolume/SOAVolume/SOA:/u01/oracle/user_projects --env-file /software/adminserver.env.list oracle/soa:12.2.1.3
 #docker run -i -t  --name soams --network=SOANet -p 8001:8001 --volumes-from soaas --env-file /software/soaserver.env.list oracle/soa:12.2.1.3 "/u01/oracle/dockertools/startMS.sh"
 
+#Fixing 2 container variant by connecting the containers and starting the nodemanager
+#docker exec -u root soaas yum -y install socat
+#docker exec -d -u root soaas "/usr/bin/socat" TCP4-LISTEN:8001,fork TCP4:soams:8001
+#docker exec -d soaas "/u01/oracle/user_projects/domains/InfraDomain/bin/startNodeManager.sh"
+
 #One container
 #docker run -i -t  --name soaas --network=SOANet -p 7001:7001 -p 8001:8001 -v /scratch/DockerVolume/SOAVolume/SOA:/u01/oracle/user_projects --env-file /software/adminserver.env.list --env-file /software/soaserver.env.list oracle/soa:12.2.1.3
 #docker exec -it soaas "/u01/oracle/dockertools/startMS.sh"
 #docker exec -d soaas "/u01/oracle/user_projects/domains/InfraDomain/bin/startNodeManager.sh"
+
+#For JDeveloper
+#Build
+#Files in software folder. Read Dockerfile for installers
+#cd /media/sf_software
+#docker build -t oracle/soa:12.2.1-dev .
+
+#run
+#docker run -i -t --name soajdev --network=SOANet -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix oracle/soa:12.2.1-dev "bash"
+#docker exec -u root soajdev "yum" -y install libXext libXrender libXtst
+#docker exec -u oracle soajdev "/u01/oracle/soa/jdeveloper/jdev/bin/jdev"
