@@ -17,6 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "ubuntur" , primary: true do |ubuntur|
   
   ubuntur.vm.box = "ubuntu/bionic64"
+  ubuntur.vm.box_version = "20180508.0.0"
   
   ubuntur.vm.hostname = "ubuntur"
   
