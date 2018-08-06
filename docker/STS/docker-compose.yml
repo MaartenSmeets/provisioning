@@ -17,3 +17,5 @@ services:
         environment:
             - DISPLAY
         user: develop
+        ports:
+            - "8080:8080"
