@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+    sts:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                uid: ${UID}
+        container_name: "sts"
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix
+            - /home/develop/ws:/home/develop/ws
+            - /home/develop/.m2:/home/develop/.m2
+            - /usr/lib/jvm/java-10-oracle:/usr/lib/jvm/java-10-oracle
+            - /etc/java-10-oracle:/etc/java-10-oracle
+        environment:
+            - DISPLAY
+        user: develop
