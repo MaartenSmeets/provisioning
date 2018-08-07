@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+    sts:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                uid: ${UID}
+        container_name: "sts"
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix
+            - /home/myuser/ws:/home/develop/ws
+            - /home/myuser/.m2:/home/develop/.m2
+            - /usr/lib/jvm/java-8-oracle:/usr/lib/jvm/java-8-oracle
+            - /etc/java-8-oracle:/etc/java-8-oracle
+        environment:
+            - DISPLAY
+        user: develop
+        ports:
+            - "8080:8080"

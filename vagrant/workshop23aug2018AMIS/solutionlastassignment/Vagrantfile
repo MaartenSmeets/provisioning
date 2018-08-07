@@ -1,0 +1,27 @@
+VAGRANTFILE_API_VERSION = "2"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  #Below uses several plugins
+  #To install them:
+  #vagrant plugin install vagrant-docker-compose
+  #vagrant plugin install vagrant-disksize
+  #vagrant plugin install vagrant-vbguest
+  config.vm.define "course" , primary: true do |course|
+  course.vm.box = "ubuntu/xenial64"
+  course.vm.box_version = "20180806.0.0"
+  course.disksize.size = "50GB"
+  course.vbguest.auto_update = true
+  course.vm.hostname = "ubuntu-vm"
+  course.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm"     , :id, "--memory", "8192"]
+      vb.customize ["modifyvm"     , :id, "--name"  , "Ubuntu VM"]
+      vb.customize ["modifyvm"     , :id, "--cpus"  , 4]
+      vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
+      vb.customize ["modifyvm"     , :id, "--vram","16"]
+  end
+
+  course.vm.provision :docker
+  course.vm.provision :docker_compose
+  course.vm.provision :shell, path: "provision.sh"
+  
+  end
+end 
