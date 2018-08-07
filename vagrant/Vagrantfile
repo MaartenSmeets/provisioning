@@ -15,12 +15,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm"     , :id, "--memory", "8192"]
       vb.customize ["modifyvm"     , :id, "--name"  , "Ubuntu VM"]
       vb.customize ["modifyvm"     , :id, "--cpus"  , 4]
-	  vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
-	  vb.customize ["modifyvm"     , :id, "--vram","16"]
+      vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
+      vb.customize ["modifyvm"     , :id, "--vram","16"]
   end
 
-  config.vm.provision :docker
-  config.vm.provision :docker_compose
+  course.vm.provision :docker
+  course.vm.provision :docker_compose
   course.vm.provision :shell, path: "provision.sh"
   
   end
