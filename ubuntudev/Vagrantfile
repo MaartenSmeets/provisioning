@@ -1,0 +1,38 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define "course" , primary: true do |course|
+  
+  course.vm.box = "ubuntu/bionic64"
+  
+  course.vm.hostname = "course"
+   
+  course.disksize.size = '50GB'
+  
+  course.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm"     , :id, "--memory", "8192"]
+      vb.customize ["modifyvm"     , :id, "--name"  , "course"]
+      vb.customize ["modifyvm"     , :id, "--cpus"  , 4]
+	  vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
+	  vb.customize ["modifyvm"     , :id, "--vram","16"]
+
+  end
+	
+  #this starts provisioning the machine
+  course.vm.provision :shell, path: "provision.sh"
+  end
+
+end
