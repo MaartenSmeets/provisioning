@@ -32,4 +32,15 @@ echo '[User]' > /var/lib/AccountsService/users/vagrant
 echo 'SystemAccount=true' >> /var/lib/AccountsService/users/vagrant
 
 apt-get clean
+
+#Add additional swap space
+#fallocate -l 4G /swapfile
+#chmod 600 /swapfile
+#mkswap /swapfile
+#swapon /swapfile
+#echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+#Node
+#curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+
 shutdown now -h
