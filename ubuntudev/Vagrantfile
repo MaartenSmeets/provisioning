@@ -20,8 +20,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   course.vm.hostname = "course"
   
-  course.vm.synced_folder "C:/Users/maart/Downloads", "/Downloads"
-  
   course.disksize.size = '50GB'
   
   course.vbguest.auto_update = true
@@ -36,6 +34,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 	
   #this starts provisioning the machine
+  course.vm.provision :docker
+  course.vm.provision :docker_compose
   course.vm.provision :shell, path: "provision.sh"
   end
 

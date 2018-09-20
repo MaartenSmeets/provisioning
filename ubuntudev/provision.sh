@@ -41,6 +41,18 @@ apt-get clean
 #echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
 #Node
-#curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+apt-get install -y nodejs
+
+#Kafka
+sudo -u developer wget http://www.kafkatool.com/download2/kafkatool.sh -O /home/course/kafkatool.sh
+sudo -u developer git clone https://github.com/confluentinc/kafka-workshop.git /home/developer/kafka-workshop
+
+#Visual Studio Code
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+apt-get update
+sudo apt-get install code # or code-insiders
 
 shutdown now -h
