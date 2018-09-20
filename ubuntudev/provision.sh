@@ -31,8 +31,6 @@ sudo perl -e '$^I=".backup";while(<>){s/#(WaylandEnable=false)/$1/;print;}' /etc
 echo '[User]' > /var/lib/AccountsService/users/vagrant
 echo 'SystemAccount=true' >> /var/lib/AccountsService/users/vagrant
 
-apt-get clean
-
 #Add additional swap space
 #fallocate -l 4G /swapfile
 #chmod 600 /swapfile
@@ -45,7 +43,7 @@ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 apt-get install -y nodejs
 
 #Kafka
-sudo -u developer wget http://www.kafkatool.com/download2/kafkatool.sh -O /home/course/kafkatool.sh
+sudo -u developer wget http://www.kafkatool.com/download2/kafkatool.sh -O /home/developer/kafkatool.sh
 sudo -u developer git clone https://github.com/confluentinc/kafka-workshop.git /home/developer/kafka-workshop
 
 #Visual Studio Code
@@ -53,6 +51,15 @@ curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microso
 sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
 sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
 apt-get update
-sudo apt-get install code # or code-insiders
+sudo apt-get install code 
+
+#Postman
+wget https://dl.pstmn.io/download/latest/linux64 -O /tmp/postman.tar.gz
+sudo tar -xzf /tmp/postman.tar.gz -C /opt
+rm /tmp/postman.tar.gz
+sudo ln -s /opt/Postman/Postman /usr/bin/postman
+
+apt-get autoremove
+apt-get clean
 
 shutdown now -h

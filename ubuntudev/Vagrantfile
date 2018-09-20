@@ -34,8 +34,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 	
   #this starts provisioning the machine
-  course.vm.provision :docker
-  course.vm.provision :docker_compose
   course.vm.provision :shell, path: "provision.sh"
   end
 
