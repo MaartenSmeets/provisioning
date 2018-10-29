@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "course" , primary: true do |course|
   
-  course.vm.box = "ubuntu/bionic64"
+  course.vm.box = "ubuntu/cosmic64"
   
   course.vm.hostname = "course"
   
