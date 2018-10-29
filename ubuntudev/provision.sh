@@ -1,7 +1,7 @@
 #Desktop
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
  
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 add-apt-repository ppa:linuxuprising/java
 
 apt-get update
@@ -20,10 +20,10 @@ usermod -a -G sudo developer
 usermod --shell /bin/bash developer
 
 #JDK
-echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
-echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
-apt-get -y install oracle-java10-installer
-apt-get -y install oracle-java10-set-default
+echo debconf shared/accepted-oracle-license-v1-2 select true | sudo debconf-set-selections
+echo debconf shared/accepted-oracle-license-v1-2 seen true | sudo debconf-set-selections
+apt-get -y install oracle-java11-installer
+apt-get -y install oracle-java11-set-default
 
 #Fix screen flickering issue
 sudo perl -e '$^I=".backup";while(<>){s/#(WaylandEnable=false)/$1/;print;}' /etc/gdm3/custom.conf
