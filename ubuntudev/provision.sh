@@ -5,7 +5,7 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bi
 add-apt-repository ppa:linuxuprising/java
 
 apt-get update
-apt-get -y install jq aptitude apt-transport-https ca-certificates curl software-properties-common docker-ce docker-compose libxss1 libgconf2-4
+apt-get -y install jq aptitude apt-transport-https ca-certificates curl software-properties-common docker-ce docker-compose libxss1 libgconf2-4 evince
 aptitude -y install --without-recommends ubuntu-desktop 
 #Fix root not allowed to start X-window
 xhost local:root
