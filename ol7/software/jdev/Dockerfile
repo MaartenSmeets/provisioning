@@ -65,6 +65,8 @@ RUN echo "net.core.rmem_max=4192608" > /u01/oracle/.sysctl.conf && \
     echo "net.core.wmem_max=4192608" >> /u01/oracle/.sysctl.conf && \ 
     sysctl -e -p /u01/oracle/.sysctl.conf
 
+RUN yum -y install libXext libXrender libXtst
+
 # Unzip SOA Suite installer
 WORKDIR /u01
 
