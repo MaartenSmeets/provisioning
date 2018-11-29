@@ -1,0 +1,8 @@
+#below command takes about 15 mins, requires 25Gb of diskspace and some files (see Dockerfile)
+#docker build -t oracle/soa:12.2.1-dev .
+docker network create -d bridge SOANet
+docker run -td --name soajdev --network=SOANet -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix oracle/soa:12.2.1-dev "bash"
+docker exec -u root soajdev "yum" -y install libXext libXrender libXtst
+#Running under user oracle in Docker and on host. else additional actions are required. 
+#See http://javaoraclesoa.blogspot.com/2018/08/running-spring-tool-suite-and-other-gui.html UID and xhost commands
+docker exec -u oracle soajdev "/u01/oracle/soa/jdeveloper/jdev/bin/jdev"
