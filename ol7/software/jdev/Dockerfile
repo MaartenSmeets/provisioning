@@ -2,26 +2,14 @@
 #
 # ORACLE DOCKERFILES PROJECT
 # --------------------------
-# This is the Dockerfile for SOA Suite 12.2.1 Quick Start Distro
+# This is the Dockerfile for SOA Suite 12.2.1.3 Quick Start Distro
 # 
-# IMPORTANT
-# ---------
-# The resulting image of this Dockerfile DOES NOT contain a SOA Suite Domain.
-# For that, look into the folder 'samples' for an example on how
-# to create a domain on a new inherited image.
-#
-# You can go into 'samples/12c-domain' after building the generic raw image
-# and build that image, for example:
-# 
-#   $ cd samples/12c-domain
-#   $ sudo docker build -t mysoa .
-#
 # REQUIRED FILES TO BUILD THIS IMAGE
 # ----------------------------------
 # (1) fmw_12.2.1.3.0.soaqs_Disk1_1of2.zip and fmw_12.2.1.3.0.soaqs_Disk1_2of2.zip
 #     Download the Quick Start installer from http://www.oracle.com/technetwork/middleware/soasuite/downloads/index.html
 #
-# (2) jdk-8u171-linux-x64.rpm
+# (2) jdk-8u191-linux-x64.rpm
 #     Download from http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 #
 # HOW TO BUILD THIS IMAGE
@@ -40,7 +28,7 @@ MAINTAINER Maarten Smeets <maarten.smeets@amis.nl>
 
 # Environment variables required for this build (do NOT change)
 # -------------------------------------------------------------
-ENV JAVA_RPM jdk-8u171-linux-x64.rpm
+ENV JAVA_RPM jdk-8u191-linux-x64.rpm
 ENV SOA_ZIP1 fmw_12.2.1.3.0_soaqs_Disk1_1of2.zip
 ENV SOA_ZIP2 fmw_12.2.1.3.0_soaqs_Disk1_2of2.zip
 ENV SOA_PKG fmw_12.2.1.3.0_soa_quickstart.jar
