@@ -1,0 +1,11 @@
+#below command takes about 15 mins, requires 25Gb of diskspace and some files (see Dockerfile)
+#docker build -t oracle/soa:12.2.1-dev .
+docker network create -d bridge SOANet
+#First time:
+docker run -i -t --name soajdev --network=SOANet -u oracle -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix oracle/soa:12.2.1-dev "/u01/oracle/soa/jdeveloper/jdev/bin/jdev"
+
+#After stopped (JDev exited):
+docker start soajdev
+
+#Running under user oracle in Docker and on host. else additional actions are required. 
+#See http://javaoraclesoa.blogspot.com/2018/08/running-spring-tool-suite-and-other-gui.html UID and xhost commands
