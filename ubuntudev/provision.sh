@@ -3,7 +3,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 apt-cache policy docker-ce
 
 #Also xenial for old Docker version for running Minikube locally 
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu disco stable"
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu cosmic stable"
 add-apt-repository ppa:linuxuprising/java
 
 apt-get update
