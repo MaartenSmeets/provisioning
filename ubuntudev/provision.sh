@@ -4,15 +4,12 @@ apt-cache policy docker-ce
 
 #Also xenial for old Docker version for running Minikube locally 
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu cosmic stable"
-add-apt-repository ppa:linuxuprising/java
 
 apt-get update
 apt-get -y install terminator firefox jq aptitude apt-transport-https ca-certificates gnupg2 curl software-properties-common docker-ce docker-compose libxss1 libgconf2-4 evince socat maven openjdk-8-jdk
 aptitude -y install --without-recommends ubuntu-desktop 
 #Fix root not allowed to start X-window
 xhost local:root
-
-
 
 #developer user
 useradd -d /home/developer -m developer
