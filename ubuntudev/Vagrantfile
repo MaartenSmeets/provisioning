@@ -14,27 +14,30 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.define "course" , primary: true do |course|
+  config.vm.define "ubuntudev" , primary: true do |ubuntudev|
   
-  course.vm.box = "ubuntu/cosmic64"
+  ubuntudev.vm.box = "ubuntu/disco64"
   
-  course.vm.hostname = "course"
+  ubuntudev.vm.hostname = "ubuntudev"
   
-  course.disksize.size = '50GB'
+  ubuntudev.disksize.size = '75GB'
   
-  course.vbguest.auto_update = true
   
-  course.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm"     , :id, "--memory", "8192"]
+  
+  ubuntudev.vbguest.auto_update = true
+  
+  ubuntudev.vm.provider :virtualbox do |vb|
+	  vb.default_nic_type = "Am79C973"
+	  vb.customize ["modifyvm"     , :id, "--memory", "16384"]
       vb.customize ["modifyvm"     , :id, "--name"  , "Ubuntu Dev"]
-      vb.customize ["modifyvm"     , :id, "--cpus"  , 4]
+      vb.customize ["modifyvm"     , :id, "--cpus"  , 6]
 	  vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
 	  vb.customize ["modifyvm"     , :id, "--vram","16"]
 
   end
 	
   #this starts provisioning the machine
-  course.vm.provision :shell, path: "provision.sh"
+  ubuntudev.vm.provision :shell, path: "provision.sh"
   end
 
 end
