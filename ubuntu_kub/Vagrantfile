@@ -1,0 +1,51 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+unless Vagrant.has_plugin?("vagrant-disksize")
+  puts 'Installing vagrant-disksize Plugin...'
+  system('vagrant plugin install vagrant-disksize')
+end
+
+unless Vagrant.has_plugin?("vagrant-vbguest")
+  puts 'Installing vagrant-vbguest Plugin...'
+  system('vagrant plugin install vagrant-vbguest')
+end
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define "ubuntudev" , primary: true do |ubuntudev|
+  
+  ubuntudev.vm.box = "ubuntu/bionic64"
+  
+  ubuntudev.vm.hostname = "ubuntudev"
+  
+  ubuntudev.disksize.size = '100GB'
+  
+  ubuntudev.vbguest.auto_update = true
+  
+  ubuntudev.vm.provider :virtualbox do |vb|
+	  vb.default_nic_type = "Am79C973"
+	  vb.customize ["modifyvm"     , :id, "--memory", "8192"]
+      vb.customize ["modifyvm"     , :id, "--name"  , "Ubuntu Dev"]
+      vb.customize ["modifyvm"     , :id, "--cpus"  , 8]
+	  vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
+	  vb.customize ["modifyvm"     , :id, "--vram","16"]
+
+  end
+	
+  #this starts provisioning the machine
+  ubuntudev.vm.provision :shell, path: "provision.sh"
+  end
+
+end
