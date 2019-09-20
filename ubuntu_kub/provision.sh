@@ -31,5 +31,11 @@ sed -i 's/vagrant/developer/g' /etc/sudoers.d/developer
 
 apt-get autoremove
 apt-get clean
-
+snap install microk8s --classic
+usermod -a -G microk8s developer
+snap alias microk8s.kubectl kubectl
+sudo -u developer microk8s.status --wait-ready
+sudo -u developer microk8s.enable dns dashboard
+sudo -u developer microk8s.enable registry helm
+snap alias microk8s.helm helm
 shutdown now -h
