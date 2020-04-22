@@ -3,7 +3,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 apt-cache policy docker-ce
 
 #Also xenial for old Docker version for running Minikube locally 
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu cosmic stable"
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 
 apt-get update
 apt-get -y install terminator firefox jq aptitude apt-transport-https ca-certificates gnupg2 curl software-properties-common docker-ce docker-compose libxss1 libgconf2-4 evince socat maven openjdk-8-jdk
@@ -30,14 +30,8 @@ cp /etc/sudoers.d/vagrant /etc/sudoers.d/developer
 sed -i 's/vagrant/developer/g' /etc/sudoers.d/developer
 
 #Node
-curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 apt-get install -y nodejs
-
-#Postman
-wget https://dl.pstmn.io/download/latest/linux64 -O /tmp/postman.tar.gz
-sudo tar -xzf /tmp/postman.tar.gz -C /opt
-rm /tmp/postman.tar.gz
-sudo ln -s /opt/Postman/Postman /usr/bin/postman
 
 apt-get autoremove
 apt-get clean
