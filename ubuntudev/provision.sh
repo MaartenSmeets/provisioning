@@ -32,4 +32,9 @@ sed -i 's/vagrant/developer/g' /etc/sudoers.d/developer
 apt-get autoremove
 apt-get clean
 
+sysctl -w vm.max_map_count=262144
+sysctl -w fs.file-max=65536
+ulimit -n 65536
+ulimit -u 4096
+#docker exec -it comp_jenkins_1 cat ./var/jenkins_home/secrets/initialAdminPassword
 shutdown now -h
