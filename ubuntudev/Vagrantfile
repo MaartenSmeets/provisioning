@@ -29,7 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   ubuntudev.vm.box = "ubuntu/focal64"
   ubuntudev.vm.hostname = "ubuntudev"
   ubuntudev.disksize.size = '75GB'
-  ubuntudev.vbguest.auto_update = false
+  ubuntudev.vbguest.auto_update = true
   ubuntudev.vm.provider :virtualbox do |vb|
 	  vb.customize ["modifyvm"     , :id, "--memory", "16384"]
       vb.customize ["modifyvm"     , :id, "--name"  , "Ubuntu Dev"]

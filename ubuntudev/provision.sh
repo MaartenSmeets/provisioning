@@ -6,7 +6,7 @@ apt-cache policy docker-ce
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 
 apt-get update
-apt-get -y install terminator firefox jq aptitude apt-transport-https ca-certificates gnupg2 curl software-properties-common docker-ce docker-compose libxss1 libgconf2-4 evince socat maven openjdk-11-jdk
+apt-get -y install terminator firefox jq aptitude apt-transport-https ca-certificates gnupg2 curl software-properties-common docker-ce docker-compose libxss1 libgconf-2-4 evince socat maven openjdk-11-jdk aptitude
 aptitude -y install --without-recommends ubuntu-desktop 
 #Fix root not allowed to start X-window
 xhost local:root
@@ -20,7 +20,7 @@ usermod -a -G sudo developer
 usermod --shell /bin/bash developer
 
 #Fix screen flickering issue
-perl -e '$^I=".backup";while(<>){s/#(WaylandEnable=false)/$1/;print;}' /etc/gdm3/custom.conf
+#perl -e '$^I=".backup";while(<>){s/#(WaylandEnable=false)/$1/;print;}' /etc/gdm3/custom.conf
 
 #Hide vagrant
 echo '[User]' > /var/lib/AccountsService/users/vagrant
