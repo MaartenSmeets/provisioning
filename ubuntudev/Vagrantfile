@@ -17,14 +17,17 @@ unless Vagrant.has_plugin?("vagrant-disksize")
   system('vagrant plugin install vagrant-disksize')
 end
 
+unless Vagrant.has_plugin?("vagrant-vbguest")
+  puts 'Installing vagrant-vbguest Plugin...'
+  system('vagrant plugin install vagrant-vbguest')
+end
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "ubuntudev" , primary: true do |ubuntudev|
   
   ubuntudev.vm.box = "ubuntu/focal64"
-  
   ubuntudev.vm.hostname = "ubuntudev"
-  
   ubuntudev.disksize.size = '75GB'
   ubuntudev.vbguest.auto_update = false
   ubuntudev.vm.provider :virtualbox do |vb|
@@ -33,9 +36,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm"     , :id, "--cpus"  , 6]
 	  vb.customize ["modifyvm"     , :id, "--clipboard","bidirectional"]
 	  vb.customize ["modifyvm"     , :id, "--vram","16"]
-
   end
-	
+
   #this starts provisioning the machine
   ubuntudev.vm.provision :shell, path: "provision.sh"
   end
