@@ -3,7 +3,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 apt-cache policy docker-ce
 
 #Also xenial for old Docker version for running Minikube locally 
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 
 apt-get update
 apt-get -y install terminator firefox jq aptitude apt-transport-https ca-certificates gnupg2 curl software-properties-common docker-ce docker-compose libxss1 libgconf-2-4 evince socat maven openjdk-11-jdk aptitude
