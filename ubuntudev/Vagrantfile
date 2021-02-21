@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "ubuntudev" , primary: true do |ubuntudev|
   
-  ubuntudev.vm.box = "ubuntu/bionic64"
+  ubuntudev.vm.box = "ubuntu/focal64"
   
   ubuntudev.vm.hostname = "ubuntudev"
   

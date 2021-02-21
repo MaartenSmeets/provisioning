@@ -6,7 +6,7 @@ apt-cache policy docker-ce
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 
 apt-get update
-apt-get -y install terminator firefox jq aptitude apt-transport-https ca-certificates gnupg2 curl software-properties-common docker-ce docker-compose libxss1 libgconf2-4 evince socat maven openjdk-8-jdk
+apt-get -y install terminator firefox jq aptitude apt-transport-https ca-certificates gnupg2 curl software-properties-common docker-ce docker-compose libxss1 libgconf2-4 evince socat maven openjdk-11-jdk
 aptitude -y install --without-recommends ubuntu-desktop 
 #Fix root not allowed to start X-window
 xhost local:root
@@ -28,10 +28,6 @@ echo 'SystemAccount=true' >> /var/lib/AccountsService/users/vagrant
 
 cp /etc/sudoers.d/vagrant /etc/sudoers.d/developer
 sed -i 's/vagrant/developer/g' /etc/sudoers.d/developer
-
-#Node
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-apt-get install -y nodejs
 
 apt-get autoremove
 apt-get clean
