@@ -23,21 +23,6 @@ services:
       - sonarnet
     ports:
       - '9000:9000'
-    environment:
-      - sonar.jdbc.username=sonar
-      - sonar.jdbc.password=sonar
-      - sonar.jdbc.url=jdbc:postgresql://db:5432/sonar
-
-  db:
-    image: postgres
-    networks:
-      - sonarnet
-    environment:
-      - POSTGRES_USER=sonar
-      - POSTGRES_PASSWORD=sonar
-    volumes:
-      - postgresql:/var/lib/postgresql
-      - postgresql_data:/var/lib/postgresql/data
 
 networks:
   sonarnet:
@@ -48,6 +33,4 @@ volumes:
   sonarqube_data:
   sonarqube_extensions:
   sonarqube_bundled-plugins:
-  postgresql:
-  postgresql_data:
   jenkins_data:
