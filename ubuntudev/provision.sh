@@ -45,7 +45,9 @@ echo "* hard nofile 65536" >> cat /etc/security/limits.conf
 echo "* soft nproc 4096" >> cat /etc/security/limits.conf
 echo "* hard nproc 4096" >> cat /etc/security/limits.conf
 mkdir /home/developer/comp
-cp docker-compose.yml /home/developer/comp
+cp /vagrant/docker-compose.yml /home/developer/comp
+chown developer:developer /home/developer/comp/docker-compose.yml
 #Obtain Jenkins password after docker-compose up
 #docker exec -it comp_jenkins_1 cat ./var/jenkins_home/secrets/initialAdminPassword
+snap install intellij-idea-community --classic
 shutdown now -h
