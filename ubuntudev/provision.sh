@@ -32,9 +32,20 @@ sed -i 's/vagrant/developer/g' /etc/sudoers.d/developer
 apt-get autoremove
 apt-get clean
 
-sysctl -w vm.max_map_count=262144
-sysctl -w fs.file-max=65536
-ulimit -n 65536
-ulimit -u 4096
+#Doing some settings for Elasticsearch
+#sysctl -w vm.max_map_count=262144
+#sysctl -w fs.file-max=65536
+#ulimit -n 65536
+#ulimit -u 4096
+#Below makes the above permanent
+echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+echo "fs.file-max=65536" >> /etc/sysctl.conf
+echo "* soft nofile 65536" >> cat /etc/security/limits.conf
+echo "* hard nofile 65536" >> cat /etc/security/limits.conf
+echo "* soft nproc 4096" >> cat /etc/security/limits.conf
+echo "* hard nproc 4096" >> cat /etc/security/limits.conf
+mkdir /home/developer/comp
+cp docker-compose.yml /home/developer/comp
+#Obtain Jenkins password after docker-compose up
 #docker exec -it comp_jenkins_1 cat ./var/jenkins_home/secrets/initialAdminPassword
 shutdown now -h
